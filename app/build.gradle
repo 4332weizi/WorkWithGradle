@@ -40,7 +40,18 @@ android {
     }
 
     buildTypes {
+        debug {
+            debuggable true
+            shrinkResources false
+            signingConfig signingConfigs.debug
+        }
         release {
+            debuggable false
+            signingConfig signingConfig.release
+            //是否清理无用资源
+            shrinkResources true
+            //是否启用zipAlign压缩
+            zipAlignEnabled true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
