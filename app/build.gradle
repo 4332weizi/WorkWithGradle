@@ -18,9 +18,13 @@ android {
         }
     }
 }
-
+//声明项目依赖
 dependencies {
+    // 加入本地的jar依赖
+    compile files('libs/gson-2.3.1.jar')
+    // 加入本地libs/下的所有jar文件
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
+    // 加入Maven仓库中的依赖
+    compile 'com.google.code.gson:gson:2.3.1'
     compile 'com.android.support:appcompat-v7:22.1.1'
 }
