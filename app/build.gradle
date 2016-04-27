@@ -1,16 +1,44 @@
 apply plugin: 'com.android.application'
 
 android {
+    //SDK版本号
     compileSdkVersion 22
+    //build工具版本号
     buildToolsVersion "22.0.1"
 
+    //签名
+    signingConfigs {
+        debug {
+            //别名
+            keyAlias 'androiddebugkey'
+            //密码
+            keyPassword 'android'
+            //证书文件
+            storeFile file('keystore/debug.keystore')
+            //文件密码
+            storePassword 'android'
+        }
+        release {
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storeFile file('keystore/release.keystore')
+            storePassword 'android'
+        }
+    }
+
     defaultConfig {
+        // pakagename
         applicationId "net.funol.workwithgradle"
+        // 支持的最低版本
         minSdkVersion 15
+        // 目标SDK版本
         targetSdkVersion 22
+        // 版本号
         versionCode 1
+        // 版本名称
         versionName "1.0"
     }
+
     buildTypes {
         release {
             minifyEnabled false
