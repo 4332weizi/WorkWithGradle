@@ -1,0 +1,69 @@
+apply plugin: 'com.android.application'
+
+android {
+    //SDK版本号
+    compileSdkVersion 22
+    //build工具版本号
+    buildToolsVersion "22.0.1"
+
+    //签名
+    signingConfigs {
+        debug {
+            //别名
+            keyAlias 'androiddebugkey'
+            //密码
+            keyPassword 'android'
+            //证书文件
+            storeFile file('keystore/debug.keystore')
+            //文件密码
+            storePassword 'android'
+        }
+        release {
+            keyAlias 'androiddebugkey'
+            keyPassword 'android'
+            storeFile file('keystore/release.keystore')
+            storePassword 'android'
+        }
+    }
+
+    defaultConfig {
+        // pakagename
+        applicationId "net.funol.workwithgradle"
+        // 支持的最低版本
+        minSdkVersion 15
+        // 目标SDK版本
+        targetSdkVersion 22
+        // 版本号
+        versionCode 1
+        // 版本名称
+        versionName "1.0"
+    }
+
+    buildTypes {
+        debug {
+            debuggable true
+            shrinkResources false
+            signingConfig signingConfigs.debug
+        }
+        release {
+            debuggable false
+            signingConfig signingConfig.release
+            //是否清理无用资源
+            shrinkResources true
+            //是否启用zipAlign压缩
+            zipAlignEnabled true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+//声明项目依赖
+dependencies {
+    // 加入本地的jar依赖
+    compile files('libs/gson-2.3.1.jar')
+    // 加入本地libs/下的所有jar文件
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    // 加入Maven仓库中的依赖
+    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'com.android.support:appcompat-v7:22.1.1'
+}
