@@ -47,7 +47,7 @@ android {
         }
         release {
             debuggable false
-            signingConfig signingConfig.release
+            signingConfig signingConfigs.release
             //是否清理无用资源
             shrinkResources true
             //是否启用zipAlign压缩
