@@ -44,6 +44,10 @@ android {
             debuggable true
             shrinkResources false
             signingConfig signingConfigs.debug
+
+            buildConfigField "String", "HOST", '"https://debug.funol.net"'
+            buildConfigField "boolean", "isRelease", 'false'
+            buildConfigField "int", "versionCode", "${defaultConfig.versionCode}"
         }
         release {
             debuggable false
@@ -54,6 +58,19 @@ android {
             zipAlignEnabled true
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "HOST", '"https://release.funol.net"'
+            buildConfigField "boolean", "isRelease", 'true'
+            buildConfigField "int", "versionCode", "${defaultConfig.versionCode}"
+        }
+        toTest{
+            debuggable true
+            shrinkResources false
+            signingConfig signingConfigs.debug
+
+            buildConfigField "String", "HOST", '"https://test.funol.net"'
+            buildConfigField "boolean", "isRelease", 'false'
+            buildConfigField "int", "versionCode", "${defaultConfig.versionCode}"
         }
     }
 }
