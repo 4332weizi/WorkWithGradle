@@ -73,6 +73,19 @@ android {
             buildConfigField "int", "versionCode", "${defaultConfig.versionCode}"
         }
     }
+
+    productFlavors {
+        official{
+            versionName "1.0-official"
+        }
+        google {
+            versionName "1.0-google"
+        }
+        wandoujia {
+            versionName "1.0-wandoujia"
+        }
+    }
+
 }
 //声明项目依赖
 dependencies {

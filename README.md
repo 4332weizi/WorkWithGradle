@@ -30,3 +30,26 @@ buildTypes {
         }
 }
 ```
+2.使用`productFlavors`
+--
+一个product flavor定义了从项目中构建了一个应用的自定义版本。一个单一的项目可以同时定义多个不同的flavor来改变应用的输出。虽然最项目终生成了多个定制的版本，但是它们本质上都是同一个应用，这种做法是比使用库项目更好的实现方式。
+通常情况下，我们会在不同的应用市场发布应用。为了区分这些应用市场，我们会修改工程中的某个参数然后将工程分别打包。这个工作简单，但是频繁修改会增大出错的概率，而且发布的市场比较多的时候，这会占用很大一部分时间。为了节省时间，我们可以使用`productFlavors`，在不同的flavor中定制应用。
+```gradle
+    productFlavors {
+        official{
+			//更多的定制信息
+			......
+            versionName "1.0-official"
+        }
+        google {
+			......
+            versionName "1.0-google"
+        }
+        wandoujia {
+			......
+            versionName "1.0-wandoujia"
+        }
+		......
+    }
+```
+这样定义完成之后，执行`gradlew assembleRelease`就可以打包出flavor中的所有版本。输出路径为`<ProjectFolder>\app\build\outputs\apk\`
