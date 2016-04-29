@@ -63,7 +63,7 @@ android {
             buildConfigField "boolean", "isRelease", 'true'
             buildConfigField "int", "versionCode", "${defaultConfig.versionCode}"
         }
-        toTest{
+        toTest {
             debuggable true
             shrinkResources false
             signingConfig signingConfigs.debug
@@ -75,14 +75,17 @@ android {
     }
 
     productFlavors {
-        official{
+        official {
             versionName "1.0-official"
+            manifestPlaceholders = [DEMO_VALUE: "official demo value"]
         }
         google {
             versionName "1.0-google"
+            manifestPlaceholders = [DEMO_VALUE: "google demo value"]
         }
         wandoujia {
             versionName "1.0-wandoujia"
+            manifestPlaceholders = [DEMO_VALUE: "wandoujia demo value"]
         }
     }
 

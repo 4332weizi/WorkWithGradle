@@ -53,3 +53,21 @@ buildTypes {
     }
 ```
 这样定义完成之后，执行`gradlew assembleRelease`就可以打包出flavor中的所有版本。输出路径为`<ProjectFolder>\app\build\outputs\apk\`
+3.使用`manifestPlaceholders`
+--
+有时候我们需要在AndroidManifest中使用不同的key来定制不同的版本，这时候可以使用`manifestPlaceholders`来替换AndroidManifest中的值。
+在AndroidManifest中需要替换值得地方声明`${DEMO_VALUE}`
+```xml
+<meta-data
+    android:name="DEMO_NAME"
+    android:value="${DEMO_VALUE}"/>
+```
+在gradle中使用`manifestPlaceholders`即可将其替换
+```gradle
+manifestPlaceholders = [DEMO_VALUE: "demo-value"]
+```
+`manifestPlaceholders`的数据类型为`Map`，如果要一次替换多个值，写法如下：
+```gradle
+manifestPlaceholders = [DEMO_VALUE1: "demo-value1", 
+						DEMO_VALUE2: "demo-value2"]
+```
