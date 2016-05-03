@@ -48,6 +48,9 @@ android {
             buildConfigField "String", "HOST", '"https://debug.funol.net"'
             buildConfigField "boolean", "isRelease", 'false'
             buildConfigField "int", "versionCode", "${defaultConfig.versionCode}"
+
+            manifestPlaceholders.putAll([
+                    UMENG_APP_KEY     : "55a45f2967e58e1xxxxxxxxx"])
         }
         release {
             debuggable false
@@ -62,6 +65,9 @@ android {
             buildConfigField "String", "HOST", '"https://release.funol.net"'
             buildConfigField "boolean", "isRelease", 'true'
             buildConfigField "int", "versionCode", "${defaultConfig.versionCode}"
+
+            manifestPlaceholders.putAll([
+                    UMENG_APP_KEY     : "55a45f2967e58e1xxxxxxxxx"])
         }
         toTest {
             debuggable true
@@ -71,22 +77,31 @@ android {
             buildConfigField "String", "HOST", '"https://test.funol.net"'
             buildConfigField "boolean", "isRelease", 'false'
             buildConfigField "int", "versionCode", "${defaultConfig.versionCode}"
+
+            manifestPlaceholders.putAll([
+                    UMENG_APP_KEY     : "55a4612067e58ebxxxxxxxxx"])
         }
     }
 
     productFlavors {
         official {
             versionName "1.0-official"
-            manifestPlaceholders = [DEMO_VALUE: "official demo value"]
+            manifestPlaceholders.putAll([DEMO_VALUE: "official demo value"])
         }
         google {
             versionName "1.0-google"
-            manifestPlaceholders = [DEMO_VALUE: "google demo value"]
+            manifestPlaceholders.putAll([DEMO_VALUE: "google demo value"])
         }
         wandoujia {
             versionName "1.0-wandoujia"
-            manifestPlaceholders = [DEMO_VALUE: "wandoujia demo value"]
+            manifestPlaceholders.putAll([DEMO_VALUE: "wandoujia demo value"])
         }
+    }
+
+    productFlavors.all { flavor ->
+        flavor.manifestPlaceholders.putAll([
+                AMAP_API_KEY      : "e86b3a2aa88d36b36322e58xxxxxxxxx",
+                UMENG_CHANNEL     : name])
     }
 
 }

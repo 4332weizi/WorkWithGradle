@@ -13,6 +13,18 @@
             android:name="DEMO_NAME"
             android:value="${DEMO_VALUE}"/>
 
+        <meta-data
+            android:name="UMENG_APP_KEY"
+            android:value="${UMENG_APP_KEY}"/>
+
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL}"/>
+
+        <meta-data
+            android:name="AMAP_API_KEY"
+            android:value="${AMAP_API_KEY}"/>
+
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -20,6 +32,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
