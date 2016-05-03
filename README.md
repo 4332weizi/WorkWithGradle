@@ -1,6 +1,6 @@
 # WorkWithGradle
 the basic usage of gradle
-
+**[完整gradle文件](app/build.gradle)**
 1.使用`buildConfigField`
 --
 `buildConfigField`可以在`pakagename`包下生成一个`BuildConfig`类，其中包含`buildConfigField`中声明的字段。
