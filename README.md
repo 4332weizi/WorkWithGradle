@@ -103,3 +103,28 @@ productFlavors.all { flavor ->
                 UMENG_CHANNEL     : name])
     }
 ```
+4.定制文件名
+--
+定制完成app之后我们会执行./gradlew assemble命令同一打包，如果这些版本都以默认文件名打包，结果就会是只输出一个apk文件，最先打包出来的都被覆盖掉了。所以，我们需要定制输出的apk文件名称。
+下面一段代码可以定制出`<buildType>_WorkWithGradle_v<1.0>_<yyyyMMddHHmm>_<flavorName>.apk`这样的文件名。
+```gradle
+	applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            //获取文件夹路径
+            def path = getProjectDir().absolutePath;
+            //文件名规则 <buildType>_WorkWithGradle_v<1.0>_<yyyyMMddHHmm>_<flavorName>.apk
+            def fileName = "${variant.buildType.name}_WorkWithGradle_v${defaultConfig.versionName}_${buildTime()}_${variant.productFlavors[0].name}.apk"
+            //debug模式要经常编译，文件名定制为同一个
+            if (variant.buildType.name == 'debug') {
+                fileName = 'app-debug.apk'
+            }
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                output.outputFile = new File(path, fileName)
+            }
+        }
+    }
+```
+执行`./gradlew assemble`命令即可将所有版本打包出来，如果要打包某个版本，执行`./gradlew assembleRelease`即可打包出`Release`的所有渠道版本。
+要打包指定渠道的版本，执行`./gradlew assembleGoogle`(以google为例)即可打包出Google渠道的所有Build版本。
+要打包指定版本的指定渠道包，执行`./gradlew assembleGoogleRelease`(以google的发布版为例)即可打包出Google渠道的Release版本。
