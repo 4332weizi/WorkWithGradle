@@ -1,6 +1,6 @@
 package net.funol.workwithgradle;
 
-import android.content.pm.ActivityInfo;
+import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -27,7 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private String getMetaData(String name) {
         try {
-            ActivityInfo info = this.getPackageManager().getActivityInfo(getComponentName(), PackageManager.GET_META_DATA);
+            ApplicationInfo info = this.getPackageManager().getApplicationInfo(getPackageName(),PackageManager.GET_META_DATA);
             return info.metaData.getString(name);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
