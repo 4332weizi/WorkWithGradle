@@ -1,5 +1,7 @@
 package net.funol.workwithgradle;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
@@ -17,8 +19,19 @@ public class MainActivity extends AppCompatActivity {
 
         String info = "BuildConfigs:\nHOST:" + BuildConfig.HOST
                 + "\nisRelease:" + BuildConfig.isRelease
-                + "\nversionCode:" + BuildConfig.versionCode;
+                + "\nversionCode:" + BuildConfig.versionCode
+                + "\nDEMO_VALUE:" + getMetaData("DEMO_NAME");
 
         mText.setText(info);
+    }
+
+    private String getMetaData(String name) {
+        try {
+            ApplicationInfo info = this.getPackageManager().getApplicationInfo(getPackageName(),PackageManager.GET_META_DATA);
+            return info.metaData.getString(name);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }
