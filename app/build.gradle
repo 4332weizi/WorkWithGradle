@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+def buildTime() {
+    return new Date().format("yyyyMMddHHmm", TimeZone.getTimeZone("GMT+8"))
+}
+
 android {
     //SDK版本号
     compileSdkVersion 22
@@ -50,7 +54,7 @@ android {
             buildConfigField "int", "versionCode", "${defaultConfig.versionCode}"
 
             manifestPlaceholders.putAll([
-                    UMENG_APP_KEY     : "55a45f2967e58e1xxxxxxxxx"])
+                    UMENG_APP_KEY: "55a45f2967e58e1xxxxxxxxx"])
         }
         release {
             debuggable false
@@ -67,7 +71,7 @@ android {
             buildConfigField "int", "versionCode", "${defaultConfig.versionCode}"
 
             manifestPlaceholders.putAll([
-                    UMENG_APP_KEY     : "55a45f2967e58e1xxxxxxxxx"])
+                    UMENG_APP_KEY: "55a45f2967e58e1xxxxxxxxx"])
         }
         toTest {
             debuggable true
@@ -79,7 +83,7 @@ android {
             buildConfigField "int", "versionCode", "${defaultConfig.versionCode}"
 
             manifestPlaceholders.putAll([
-                    UMENG_APP_KEY     : "55a4612067e58ebxxxxxxxxx"])
+                    UMENG_APP_KEY: "55a4612067e58ebxxxxxxxxx"])
         }
     }
 
@@ -100,8 +104,25 @@ android {
 
     productFlavors.all { flavor ->
         flavor.manifestPlaceholders.putAll([
-                AMAP_API_KEY      : "e86b3a2aa88d36b36322e58xxxxxxxxx",
-                UMENG_CHANNEL     : name])
+                AMAP_API_KEY : "e86b3a2aa88d36b36322e58xxxxxxxxx",
+                UMENG_CHANNEL: name])
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            //获取文件夹路径
+            def path = getProjectDir().absolutePath;
+            //文件名规则 buildType_WorkWithGradle_v1.0_yyyyMMddHHmm_flavorName.apk
+            def fileName = "${variant.buildType.name}_WorkWithGradle_v${defaultConfig.versionName}_${buildTime()}_${variant.productFlavors[0].name}.apk"
+            //debug模式要经常编译，文件名定制为同一个
+            if (variant.buildType.name == 'debug') {
+                fileName = 'app-debug.apk'
+            }
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                output.outputFile = new File(path, fileName)
+            }
+        }
     }
 
 }
