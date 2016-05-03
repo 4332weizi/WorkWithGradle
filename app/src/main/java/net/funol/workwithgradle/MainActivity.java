@@ -20,14 +20,17 @@ public class MainActivity extends AppCompatActivity {
         String info = "BuildConfigs:\nHOST:" + BuildConfig.HOST
                 + "\nisRelease:" + BuildConfig.isRelease
                 + "\nversionCode:" + BuildConfig.versionCode
-                + "\nDEMO_VALUE:" + getMetaData("DEMO_NAME");
+                + "\nDEMO_VALUE:" + getMetaData("DEMO_NAME")
+                + "\nUMENG_APP_KEY:" + getMetaData("UMENG_APP_KEY")
+                + "\nUMENG_CHANNEL:" + getMetaData("UMENG_CHANNEL")
+                + "\nAMAP_API_KEY:" + getMetaData("AMAP_API_KEY");
 
         mText.setText(info);
     }
 
     private String getMetaData(String name) {
         try {
-            ApplicationInfo info = this.getPackageManager().getApplicationInfo(getPackageName(),PackageManager.GET_META_DATA);
+            ApplicationInfo info = this.getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);
             return info.metaData.getString(name);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();

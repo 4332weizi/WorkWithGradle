@@ -1,6 +1,6 @@
 # WorkWithGradle
 the basic usage of gradle
-
+**[完整gradle文件](app/build.gradle)**
 1.使用`buildConfigField`
 --
 `buildConfigField`可以在`pakagename`包下生成一个`BuildConfig`类，其中包含`buildConfigField`中声明的字段。
@@ -70,4 +70,36 @@ manifestPlaceholders = [DEMO_VALUE: "demo-value"]
 ```gradle
 manifestPlaceholders = [DEMO_VALUE1: "demo-value1", 
 						DEMO_VALUE2: "demo-value2"]
+```
+通常使用统计SDK的时候会对不同渠道的app加以区分，比如友盟统计在`AndroidManifest`中的`meta-data`声明不同的`UMENG_CHANNEL`值来区分不同渠道。这时可以在`productFlavors`中使用manifestPlaceholders替换`meta-data`中的内容。如果使用`flavor`的名字作为`UMENG_CHANNEL`的值，可以统一声明。
+```gradle
+productFlavors.all { flavor ->
+    flavor.manifestPlaceholders = [UMENG_CHANNEL: name]
+}
+```
+有时会在`buildTypes`中定义不同版本的app，在这些app中使用了不同的第三方sdk的key，发布的时候又需要分发到不同的渠道。这时可以在`buildTypes`和`productFlavors`混合使用`manifestPlaceholders`来定制版本。
+```gradle
+	buildTypes {
+        debug {
+			......
+            manifestPlaceholders.putAll([
+                    UMENG_APP_KEY     : "55a4612067e58ebxxxxxxxxx"])
+        }
+        release {
+            ......
+            manifestPlaceholders.putAll([
+                    UMENG_APP_KEY     : "55a45f2967e58e1xxxxxxxxx"])
+        }
+        toTest {
+			......
+            manifestPlaceholders.putAll([
+                    UMENG_APP_KEY     : "55a4612067e58ebxxxxxxxxx"])
+        }
+    }
+	......
+	productFlavors.all { flavor ->
+        flavor.manifestPlaceholders.putAll([
+                AMAP_API_KEY      : "e86b3a2aa88d36b36322e58xxxxxxxxx",
+                UMENG_CHANNEL     : name])
+    }
 ```
