@@ -1,5 +1,9 @@
 apply plugin: 'com.android.application'
 
+def buildTime() {
+    return new Date().format("yyyyMMddHHmm", TimeZone.getTimeZone("GMT+8"))
+}
+
 android {
     //SDK版本号
     compileSdkVersion 22
@@ -102,6 +106,20 @@ android {
         flavor.manifestPlaceholders.putAll([
                 AMAP_API_KEY      : "e86b3a2aa88d36b36322e58xxxxxxxxx",
                 UMENG_CHANNEL     : name])
+    }
+    
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def outputFile = output.outputFile
+            def path = getProjectDir().absolutePath;
+            def fileName = "${variant.buildType.name}_User_v${defaultConfig.versionName}_${buildTime()}_${variant.productFlavors[0].name}.apk"
+            if (variant.buildType.name == 'debug') {
+                fileName = 'app-debug.apk'
+            }
+            if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                output.outputFile = new File(path, fileName)
+            }
+        }
     }
 
 }
